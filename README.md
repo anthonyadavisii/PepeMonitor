@@ -5,8 +5,7 @@ Author:  Anthony "Alex" Davis II
 Email:   v7davisa@gmail.com
 Website: https://github.com/anthonyadavisii
 Purpose: To monitor PepeCoin / Memetic wallet debug.log and send smtp alerts for ERROR entries allowing 3 hours remediation period before additional alerts.
-Date: 15th Feb 2019
-Version: 1.0
+
 
 .Synopsis
    Script to send email using Powershell via SendGrid account    
