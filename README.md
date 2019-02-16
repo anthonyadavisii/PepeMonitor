@@ -24,3 +24,7 @@ Run with PowerShell or PowerShell ISE
 
 Memetic / PepeCoin Website: http://www.memetic.ai/
 Also check out https://www.kekdaq.com/ for their decentralized asset / meme exchange
+
+My Memetic / PepeCoin wallet address:
+
+PFFADPcStSqVeLaENrnTahyaTHqeWHvuTe
