@@ -62,6 +62,9 @@ Version: 1.0
     
 #>
 
+$Env:SENDGRID = Read-Host "Enter SendGrid API key?"
+$recipient = Read-Host "Recipient email?"
+
 function Send-TestEmail{
     [cmdletbinding()]
     Param (
@@ -79,19 +82,23 @@ function Send-TestEmail{
         $SecurePassword=ConvertTo-SecureString $Env:SENDGRID –asplaintext –force 
         $cred = New-Object System.Management.Automation.PsCredential($sendgridusername,$SecurePassword)
         $sub="PepeCoin Error"
-        $From = "testsendgrid@mytestdomain.com"
-        Send-MailMessage -From $From -To $To -Cc $Cc -Subject $sub -Body $body -Priority High -SmtpServer "smtp.sendgrid.net" -Credential $cred -UseSsl -Port 587 -BodyAsHtml
+        $From = "donotreply@donotreply.com"
+        Send-MailMessage -From $From -To $To -Subject $sub -Body $body -Priority High -SmtpServer "smtp.sendgrid.net" -Credential $cred -UseSsl -Port 587 -BodyAsHtml
    }
 }
 
 $VerbosePreference = "continue"
 while($true)
 {
+# Gets latest debug log entry
 $entry = Get-Content  $env:USERPROFILE\AppData\Roaming\PepeCoin\debug.log | select -Last 1
+# Checks for ERROR entry which may be indicative of wallet problems
 if($entry|Select-String -Pattern 'ERROR')
     {
     Write-Verbose -Message "Error Detected in Log!"
-    Send-TestEmail -To <enter email> -Cc <enter CC email> -body $entry
+    #Send SMTP alert
+    Send-TestEmail -To $recipient -body $entry
+    #Sleeps for 3 hours to allow remediation of issue to not exceed Sendgrid free email quota
     Start-Sleep -s 10800
     }
 
